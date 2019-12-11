@@ -35,7 +35,8 @@
   "dependencies": {
     "ansi-colors-and-styles": "^1.0.3",
     "chokidar": "^3.0.2",
-    "deep-diff": "^1.0.2"
+    "deep-diff": "^1.0.2",
+    "deepmerge": "^4.2.2"
   },
   "browser": {
     "fs": false,

@@ -1,6 +1,17 @@
 import deepDiff from 'deep-diff';
+import deepMerge from 'deepmerge';
 import resolveSecret from './tools/resolveSecret';
 import SimpleEvent from './tools/SimpleEvent';
+
+function parseQuery(queryString) {
+  const query = {};
+  const pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
+  for (let i = 0; i < pairs.length; i += 1) {
+    const pair = pairs[i].split('=');
+    query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+  }
+  return query;
+}
 
 function deprecationNotice(method, isBreaking = false) {
   if (isBreaking) {
@@ -16,6 +27,12 @@ function deprecationNotice(method, isBreaking = false) {
 
 const configDidChange = new SimpleEvent();
 let config = require('./res/config.json');
+
+if (window) {
+  const query = parseQuery(window.decodeURI(window.location.search));
+  const urlConfig = JSON.parse(query.config);
+  config = deepMerge({ ...config }, urlConfig);
+}
 
 export default {
   config,
