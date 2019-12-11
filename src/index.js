@@ -28,7 +28,7 @@ function deprecationNotice(method, isBreaking = false) {
 const configDidChange = new SimpleEvent();
 let config = require('./res/config.json');
 
-if (window) {
+if (window && window.location.search && window.location.search !== '') {
   const query = parseQuery(window.decodeURI(window.location.search));
   const urlConfig = JSON.parse(query.config);
   config = deepMerge({ ...config }, urlConfig);
