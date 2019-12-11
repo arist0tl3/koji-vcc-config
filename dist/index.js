@@ -55,7 +55,7 @@ var configDidChange = new _SimpleEvent["default"]();
 
 var config = require('./res/config.json');
 
-if (window) {
+if (window && window.location.search && window.location.search !== '') {
   var query = parseQuery(window.decodeURI(window.location.search));
   var urlConfig = JSON.parse(query.config);
   config = (0, _deepmerge["default"])(_objectSpread({}, config), urlConfig);
